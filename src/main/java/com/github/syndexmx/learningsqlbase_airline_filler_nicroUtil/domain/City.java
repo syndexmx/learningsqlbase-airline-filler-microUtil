@@ -1,9 +1,6 @@
 package com.github.syndexmx.learningsqlbase_airline_filler_nicroUtil.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +16,7 @@ public class City {
 
     @Id
     @Column(name = "city_id")
+    @GeneratedValue
     String cityId;
 
     @Column(name = "city_name")
