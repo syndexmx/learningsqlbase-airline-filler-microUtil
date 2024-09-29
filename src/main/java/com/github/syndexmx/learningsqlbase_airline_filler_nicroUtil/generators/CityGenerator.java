@@ -14,19 +14,14 @@ import java.util.List;
 @PropertySource("classpath:/src/main/resources/cities.properties")
 public class CityGenerator {
 
-    @Autowired
-    @Value("#{${city.names}}")
-    final private List<String> citiesList;
+    @Value("${citynames}")
+    private String[] citiesArray;
 
     @Autowired
     static CityRepository cityRepository;
 
-    public CityGenerator(List<String> citiesList) {
-        this.citiesList = citiesList;
-    }
-
     public void generateCities() {
-        for (String s : citiesList) {
+        for (String s : citiesArray) {
             City city = City.builder().name(s).build();
             cityRepository.save(city);
         }
