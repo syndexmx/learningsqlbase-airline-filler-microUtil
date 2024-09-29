@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 
 import java.util.List;
 
-@PropertySource("classpath:/src/main/resources/cities.properties")
+@PropertySource("classpath:cities.properties")
 public class CityGenerator {
 
     @Value("${citynames}")
