@@ -8,20 +8,30 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@PropertySource("classpath:cities.properties")
+
+@Component
+@PropertySource("cities.properties")
 public class CityGenerator {
 
-    @Value("${citynames}")
-    private String[] citiesArray;
+    @Value("#{'${citygenerator.citynames}',split(',')}")
+    private List<String> listCities;
+
+    public CityGenerator(@Autowired final List<String> listCities,
+                         @Autowired final CityRepository cityRepository) {
+        this.listCities = listCities;
+        this.cityRepository = cityRepository;
+    }
 
     @Autowired
-    static CityRepository cityRepository;
+    CityRepository cityRepository;
 
     public void generateCities() {
-        for (String s : citiesArray) {
+        for (String s : listCities) {
             City city = City.builder().name(s).build();
             cityRepository.save(city);
         }

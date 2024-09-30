@@ -22,5 +22,7 @@ public class City {
     @Column(name = "city_name")
     String name;
 
-    transient int travellingPopulation;
+    public City(String name) {
+        this.name = name;
+    }
 }
