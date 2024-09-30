@@ -21,12 +21,6 @@ public class CityGenerator {
     @Value("#{'${citygenerator.citynames}',split(',')}")
     private List<String> listCities;
 
-    public CityGenerator(@Autowired final List<String> listCities,
-                         @Autowired final CityRepository cityRepository) {
-        this.listCities = listCities;
-        this.cityRepository = cityRepository;
-    }
-
     @Autowired
     CityRepository cityRepository;
 
