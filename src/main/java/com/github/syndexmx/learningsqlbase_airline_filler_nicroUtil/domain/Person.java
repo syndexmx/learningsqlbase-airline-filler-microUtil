@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,5 +41,9 @@ public class Person {
     @ManyToOne
     @JoinColumn(name = "city_id")
     City city;
+
+    @Column(name = "birth_date")
+    LocalDate birthDate;
+
 
 }
