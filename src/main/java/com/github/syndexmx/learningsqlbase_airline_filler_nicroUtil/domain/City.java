@@ -22,7 +22,11 @@ public class City {
     @Column(name = "city_name")
     String name;
 
-    transient Integer population;
+    public Integer getPopulation() {
+        return population;
+    }
+
+    transient int population;
 
     public City(String name) {
         this.name = name;

@@ -26,12 +26,16 @@ public class CityGeneratorService {
     @Autowired
     CityRepository cityRepository;
 
+    @Autowired
+    PeopleGeneratorService peopleGeneratorService;
+
     @PostMapping("/initcities")
     public ResponseEntity<String> generateCities() {
         for (String s : mapCityToPopulation.keySet()) {
             City city = City.builder().name(s).population(mapCityToPopulation.get(s)).build();
             log.debug("City " + s + "creation");
             cityRepository.save(city);
+            peopleGeneratorService.generatePeople(city);
         }
         return new ResponseEntity<String>("Generation", HttpStatus.CREATED);
     }
