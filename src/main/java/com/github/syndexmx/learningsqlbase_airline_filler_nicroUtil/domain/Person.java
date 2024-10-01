@@ -27,9 +27,9 @@ public class Person {
     String lastName;
 
     public enum SexesList {
+        NA,
         MALE,
-        FEMALE,
-        NA
+        FEMALE
     }
 
     @Column(name = "sex")

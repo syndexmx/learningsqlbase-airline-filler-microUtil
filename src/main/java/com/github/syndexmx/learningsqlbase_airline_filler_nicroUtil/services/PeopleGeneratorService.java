@@ -48,18 +48,21 @@ public class PeopleGeneratorService {
             String lastName = listLastNames.get(getRandom(listLastNames.size()));
             String firstName;
             String secondName;
+            Person.SexesList sex;
             if (getRandom(1000) < MALE_PROMILLE) {
                 firstName = listMaleFirstNames.get(getRandom(listMaleFirstNames.size()));
                 secondName = listMaleFirstNames.get(getRandom(listMaleFirstNames.size()));
+                sex = Person.SexesList.MALE;
             } else {
                 firstName = listFemaleFirstNames.get(getRandom(listFemaleFirstNames.size()));
                 secondName = listFemaleFirstNames.get(getRandom(listFemaleFirstNames.size()));
+                sex = Person.SexesList.FEMALE;
             }
             Person person = Person.builder()
                     .firstName(firstName)
                     .secondName(secondName)
                     .lastName(lastName)
-                    .sex(Person.SexesList.NA)
+                    .sex(sex)
                     .city(city)
                     .build();
             log.debug("Person: " + person.toString());
