@@ -28,18 +28,37 @@ public class PeopleGeneratorService {
     List<String> listLastNames = new ArrayList<String>();
 
     @Value("#{${person.malefirstnamesmaptofrequency}}")
-    Map<String, Integer> mapFirstNameToFrequency;
+    Map<String, Integer> mapMaleFirstNameToFrequency;
 
-    List<String> listFirstNames = new ArrayList<String>();
+    List<String> listMaleFirstNames = new ArrayList<String>();
+
+    @Value("#{${person.femalefirstnamesmaptofrequency}}")
+    Map<String, Integer> mapFemaleFirstNameToFrequency;
+
+    List<String> listFemaleFirstNames = new ArrayList<String>();
+
+    @Value("${people.malepromille}")
+    Integer MALE_PROMILLE;
 
     void generatePeople(City city) {
         initListLastNameIndexToLastName();
-        initListFirstNameIndexToFirstName();
+        initListMaleFirstNameIndexToFirstName();
+        initListFemaleFirstNameIndexToFirstName();
         for (int i = 0; i < city.getPopulation(); i++) {
+            String lastName = listLastNames.get(getRandom(listLastNames.size()));
+            String firstName;
+            String secondName;
+            if (getRandom(1000) < MALE_PROMILLE) {
+                firstName = listMaleFirstNames.get(getRandom(listMaleFirstNames.size()));
+                secondName = listMaleFirstNames.get(getRandom(listMaleFirstNames.size()));
+            } else {
+                firstName = listFemaleFirstNames.get(getRandom(listFemaleFirstNames.size()));
+                secondName = listFemaleFirstNames.get(getRandom(listFemaleFirstNames.size()));
+            }
             Person person = Person.builder()
-                    .firstName(listFirstNames.get(getRandom(listFirstNames.size())))
-                    .secondName(listFirstNames.get(getRandom(listFirstNames.size())))
-                    .lastName(listLastNames.get(getRandom(listLastNames.size())))
+                    .firstName(firstName)
+                    .secondName(secondName)
+                    .lastName(lastName)
                     .sex(Person.SexesList.NA)
                     .city(city)
                     .build();
@@ -48,17 +67,30 @@ public class PeopleGeneratorService {
         }
     }
 
-    private boolean isFirstNameListInitiated = false;
+    private boolean isMaleFirstNameListInitiated = false;
 
-    private void initListFirstNameIndexToFirstName() {
-        if (!isFirstNameListInitiated) {
-            for (String s : mapFirstNameToFrequency.keySet()) {
-                for (int i = 0; i < mapFirstNameToFrequency.get(s); i++) {
-                    listFirstNames.add(s);
+    private void initListMaleFirstNameIndexToFirstName() {
+        if (!isMaleFirstNameListInitiated) {
+            for (String s : mapMaleFirstNameToFrequency.keySet()) {
+                for (int i = 0; i < mapMaleFirstNameToFrequency.get(s); i++) {
+                    listMaleFirstNames.add(s);
                 }
             }
         }
-        isFirstNameListInitiated = true;
+        isMaleFirstNameListInitiated = true;
+    }
+
+    private boolean isFemaleFirstNameListInitiated = false;
+
+    private void initListFemaleFirstNameIndexToFirstName() {
+        if (!isFemaleFirstNameListInitiated) {
+            for (String s : mapFemaleFirstNameToFrequency.keySet()) {
+                for (int i = 0; i < mapFemaleFirstNameToFrequency.get(s); i++) {
+                    listFemaleFirstNames.add(s);
+                }
+            }
+        }
+        isFemaleFirstNameListInitiated = true;
     }
 
     private boolean isLastNameListInitiated = false;
