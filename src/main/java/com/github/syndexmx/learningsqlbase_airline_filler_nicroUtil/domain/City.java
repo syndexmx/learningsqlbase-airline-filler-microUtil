@@ -22,6 +22,8 @@ public class City {
     @Column(name = "city_name")
     String name;
 
+    transient Integer population;
+
     public City(String name) {
         this.name = name;
     }
